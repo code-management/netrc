@@ -1,50 +1,48 @@
-# Class: netrc
+# Clsas: netrc
 # ===========================
 #
-# Full description of class netrc here.
+# Parent class for netrc
 #
 # Parameters
 # ----------
 #
-# * `credentials`
-#   List of hashes of login credentials.
-#
 # * `user`
-#   User to whom the .netrc file belongs. Default: $name
+#   User to whom the .netrc file belongs.
 #
 # * `path`
-#   Absolute path of the .netrc file to deploy. Default: /home/$user/.netrc
+#   Absolute path to .netrc file.
+#
+# * `group`
+#   Group to assign to .netrc file. Default: $user
 #
 # Example
 # -------
 #
-# netrc { 'myuser':
-#   credentials => [
-#     { machine => 'myserver.com', login => 'foobar', password => 'hunter5'},
-#     { machine => 'yourserver.com', login => 'alice', password => 'bob256'}
-#   ],
-# }
 #
 class netrc (
-  $credentials,
-  $user     = $name,
-  $user_dir = $netrc::params::default_user_dir
-) inherits netrc::params {
+  $user,
+  $path,
+  $group = '',
+) {
 
-
-  # validate parameters here
+  # Validation
   validate_string($user)
-  validate_absolute_path($user_dir)
-  validate_array($credentials)
-  $credentials.each | $machine_entry | { validate_hash($machine_entry) }
+  validate_absolute_path($path)
+  validate_string($group)
 
-
-
-  # Write the .netrc file
-  file { "${user_dir}/${user}/.netrc":
-    ensure  => present,
-    owner   => $user,
-    mode    => '0600',
-    content => template('netrc/netrc.erb'),
+  if ($group == '') {
+    $concat_group = $user
+  } else {
+    $concat_group = $group
   }
+
+  concat { $path:
+    ensure         => present,
+    owner          => $user,
+    group          => $concat_group,
+    mode           => '0600',
+    warn           => true,
+    ensure_newline => true,
+  }
+
 }

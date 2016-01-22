@@ -1,6 +1,6 @@
 {
   "name": "codemanagement-netrc",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "author": "codemanagement",
   "summary": "Puppet .netrc management",
   "license": "Apache-2.0",
@@ -11,6 +11,10 @@
     {
       "name": "puppetlabs-stdlib",
       "version_requirement": ">= 1.0.0"
+    },
+    {
+      "name": "puppetlabs-concat",
+      "version_requirement": ">= 1.1.1"
     }
   ],
   "operatingsystem_support": [
@@ -22,12 +26,25 @@
       ]
     },
     {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "12.04",
+        "14.04"
+      ]
+    },
+    {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
         "5",
         "6",
         "7"
       ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 3.2.0 < 5.0.0"
     }
   ]
 }
