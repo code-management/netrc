@@ -32,7 +32,7 @@ describe 'netrc::machine' do
           it do 
             should contain_concat__fragment('netrc_fragment_my_machine').with({
               'target' => '/home/myuser/.netrc' 
-            })
+            }).with_content(/machine my_machine/)
           end
         end
       end
