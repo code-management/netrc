@@ -11,8 +11,9 @@ describe 'netrc' do
           })
         end
         
+
         
-        context "netrc with path and user" do
+        context "netrc class with path and user parameters" do
           let(:params) do
             {
               :path => '/home/myuser/.netrc',
@@ -20,45 +21,46 @@ describe 'netrc' do
             }
           end
 
-          it do
-            is_expected.to compile
-          end
+          it { is_expected.to compile.with_all_deps }
 
           it do
             is_expected.to contain_concat('/home/myuser/.netrc').with({
-              'ensure'         => 'present',
-              'owner'          => 'myuser',
-              'group'          => 'myuser',
-              'mode'           => '0600',
-              'warn'           => 'true',
-              'ensure_newline' => 'true',
+              :ensure         => 'present',
+              :owner          => 'myuser',
+              :group          => 'myuser',
+              :mode           => '0600',
+              :warn           => true,
+              :ensure_newline => true,
             })
           end
         end
 
-        context "netrc with path, user and group" do
+
+        context "netrc class with path, user and group parameters" do
           let(:params) do
             {
               :path   => '/home/myuser/.netrc',
               :user   => 'myuser',
-              :group => 'some_group'
+              :group  => 'some_group'
             }
           end
 
-          it do
-            is_expected.to compile
-          end
+          it { is_expected.to compile.with_all_deps }
 
           it do
             is_expected.to contain_concat('/home/myuser/.netrc').with({
-              'ensure'         => 'present',
-              'owner'          => 'myuser',
-              'group'          => 'some_group',
-              'mode'           => '0600',
-              'warn'           => 'true',
-              'ensure_newline' => 'true',
+              :ensure         => 'present',
+              :owner          => 'myuser',
+              :group          => 'some_group',
+              :mode           => '0600',
+              :warn           => true,
+              :ensure_newline => true,
             })
           end
+        end
+
+        context "netrc class with no parameters" do
+          it { expect { is_expected.to contain_concat('/home/my/user/.netrc') }.to raise_error(Puppet::Error, /expects a value for parameter/ ) }
         end
       end
     end
