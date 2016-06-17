@@ -60,7 +60,7 @@ describe 'netrc' do
         end
 
         context "netrc class with no parameters" do
-          it { expect { is_expected.to contain_concat('/home/my/user/.netrc') }.to raise_error(Puppet::Error, /expects a value for parameter/ ) }
+          it { expect { is_expected.to contain_concat('/home/my/user/.netrc') }.to raise_error(Puppet::Error, /expects a value for parameter|Must pass/ ) }
         end
       end
     end

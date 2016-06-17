@@ -84,7 +84,7 @@ describe 'netrc::machine' do
           let(:title) do 
             'my_machine' 
           end
-          it { expect { is_expected.to contain_concat__fragment('netrc_fragment_my_machine') }.to raise_error(Puppet::Error, /expects a value for parameter|must pass/) }
+          it { expect { is_expected.to contain_concat__fragment('netrc_fragment_my_machine') }.to raise_error(Puppet::Error, /expects a value for parameter|Must pass/) }
         end
       end
     end
